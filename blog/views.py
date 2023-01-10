@@ -25,7 +25,7 @@ def post_model_create_view(request):
         context = {
             "form": PostModelForm()
         }
-        # return HttpResponseRedirect("/blog/{num}".format(num=obj.id))
+        return HttpResponseRedirect("/blog/")
 
     template = "blog/create-view.html"
     return render(request, template, context)
@@ -51,6 +51,17 @@ def post_model_update_view(request, id=None):
 
 
 def post_model_detail_view(request, id=None):
+    # try:
+    #     obj = PostModel.objects.get(id=id)
+    # except:
+    #     raise Http404
+
+    # qs = PostModel.objects.filter(id=id)
+    # if not qs.exists() and qs.count!=1:
+    #     raise Http404
+    # else:
+    #     obj = qs.first()
+
     obj = get_object_or_404(PostModel, id=id)
     context = {
         "object": obj,
@@ -73,6 +84,11 @@ def post_model_delete_view(request, id=None):
 
 
 def post_model_list_view(request):
+    if request.user.is_authenticated:
+        template = "blog/list-view.html"
+    else:
+        template = "blog/list-view-public.html"
+
     #query = request.GET["q"]
     query = request.GET.get("q", None)
     qs = PostModel.objects.all()
@@ -86,7 +102,7 @@ def post_model_list_view(request):
         "object_list": qs,
         "messages": ["Hello", "I am doing great", "Sky is blue"]
     }
-    template = "blog/list-view.html"
+
     return render(request, template, context)
 
 
@@ -98,7 +114,7 @@ def login_required_view(request):
         "object_list": qs,
     }
 
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         template = "blog/list-view.html"
     else:
         template = "blog/list-view-public.html"

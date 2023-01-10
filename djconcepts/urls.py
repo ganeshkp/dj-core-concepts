@@ -26,6 +26,6 @@ urlpatterns = [
     re_path(r'^$', home, name='home'),
     re_path(r'^redirect/$', redirect_somewhere, name='home'),
     # app controls all urls
-    re_path(r'^blog/', include('blog.urls')),
+    re_path(r'^blog/', include(('blog.urls', 'blog'), namespace='blog')),
     #url(r'^posts/$', post_model_list_view),
 ]

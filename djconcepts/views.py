@@ -20,8 +20,8 @@ def home(request):
     response = HttpResponse(content_type='text/html')
    
     response.content = '<!DOCTYPE html><html><head><style>h1{color: red;}</style></head><body><h1>Hello World</h1></body></html>'
-    print(response.status_code)
-    print(dir(response))
+    # print(response.status_code)
+    # print(dir(response))
     #response.write("<p>Page Not Found</p>")
     # response.write("<p>Here's the text of the Web page.</p>")
     # response.write("<p>Here's the text of the Web page.</p>")
